@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  daniprototypeid4api:
+    image: ${DOCKER_REGISTRY}daniprototypeid4api
+    build:
+      context: .
+      dockerfile: DaniPrototypeId4Api/Dockerfile
