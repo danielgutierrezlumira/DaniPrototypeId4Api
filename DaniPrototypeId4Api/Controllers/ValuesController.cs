@@ -39,12 +39,15 @@ namespace DaniPrototypeId4Api.Controllers
                 var duplicatedId = true;
                 var randomId = 0;
 
-                while (!duplicatedId)
+                lock (_valuesCriticalZone)
                 {
-                    randomId = randomizer.Next();
-                    duplicatedId = _values.ContainsKey(randomId);
+                    while (!duplicatedId)
+                    {
+                        randomId = randomizer.Next();
+                        duplicatedId = _values.ContainsKey(randomId);
+                    }
+                    _values.Add(randomId, value);
                 }
-                _values.Add(randomId, value);
 
                 return randomId;
             }
@@ -55,9 +58,12 @@ namespace DaniPrototypeId4Api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
-            if (_values.ContainsKey(id))
+            lock (_valuesCriticalZone)
             {
-                _values[id] = value;
+                if (_values.ContainsKey(id))
+                {
+                    _values[id] = value;
+                }
             }
         }
 
@@ -65,9 +71,12 @@ namespace DaniPrototypeId4Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            if (_values.ContainsKey(id))
+            lock (_valuesCriticalZone)
             {
-                _values.Remove(id);
+                if (_values.ContainsKey(id))
+                {
+                    _values.Remove(id);
+                }
             }
         }
     }
