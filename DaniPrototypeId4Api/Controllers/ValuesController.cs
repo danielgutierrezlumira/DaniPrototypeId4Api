@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DaniPrototypeId4Api.Controllers
@@ -14,36 +13,38 @@ namespace DaniPrototypeId4Api.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
             lock (ValuesCriticalZone)
             {
-                return Values.Select(x => $@"{x.Key}, {x.Value}");
+                return Ok(Values);
             }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            string[] value;
-
             lock (ValuesCriticalZone)
             {
-                value = Values.Where(x => x.Key == id).Select(x => $@"{x.Key}, {x.Value}").ToArray();
+                if (Values.ContainsKey(id))
+                {
+                    return Ok(Values[id]);
+                }
+
+                return NotFound();
             }
-            return value.Length != 0 ? value.First() : null;
         }
 
         // POST api/values
         [HttpPost]
-        public int? Post([FromBody] string value)
+        public IActionResult Post([FromBody] string value)
         {
             lock (ValuesCriticalZone)
             {
                 if (Values.Count >= 100)
                 {
-                    return null;
+                    return BadRequest(@"Too many string. :(");
                 }
                 var randomizer = new Random();
                 var duplicatedId = true;
@@ -56,33 +57,39 @@ namespace DaniPrototypeId4Api.Controllers
                 }
                 Values.Add(randomId, value);
 
-                return randomId;
+                return Ok(randomId);
             }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]string value)
         {
             lock (ValuesCriticalZone)
             {
-                if (Values.ContainsKey(id))
+                if (!Values.ContainsKey(id))
                 {
-                    Values[id] = value;
+                    return NotFound();
                 }
+                Values[id] = value;
+
+                return Ok();
             }
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             lock (ValuesCriticalZone)
             {
-                if (Values.ContainsKey(id))
+                if (!Values.ContainsKey(id))
                 {
-                    Values.Remove(id);
+                    return NotFound();
                 }
+                Values.Remove(id);
+
+                return Ok();
             }
         }
     }
