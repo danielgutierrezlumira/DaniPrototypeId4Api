@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>d2ca54be-d299-457f-896d-819fc9297459</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/.well-known/openid-configuration</DockerServiceUrl>
     <DockerServiceName>daniprototypeid4api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
