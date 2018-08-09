@@ -7,7 +7,11 @@ namespace DaniPrototypeId4Api.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private static readonly IDictionary<int, string> Values = new Dictionary<int, string>();
+        private static readonly IDictionary<int, string> Values = new Dictionary<int, string>
+        {
+            {1, @"Hello world!"},
+            {2, @"Test"}
+        };
 
         private static readonly object ValuesCriticalZone = new object();
 
