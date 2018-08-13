@@ -32,7 +32,12 @@ namespace DaniPrototypeId4Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
+            app.UseHttpsRedirection();
             app.UseIdentityServer();
         }
     }
