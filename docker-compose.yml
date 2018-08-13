@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: DaniPrototypeId4Api/Dockerfile
+
+  exampleapi:
+    image: ${DOCKER_REGISTRY}exampleapi
+    build:
+      context: .
+      dockerfile: ExampleApi/Dockerfile
+
