@@ -5,10 +5,10 @@ EXPOSE 44300
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ../ExampleApi/ExampleApi.csproj ../ExampleApi/
-RUN dotnet restore ../ExampleApi/ExampleApi.csproj
+COPY ExampleApi/ExampleApi.csproj ExampleApi/
+RUN dotnet restore ExampleApi/ExampleApi.csproj
 COPY . .
-WORKDIR /src/../ExampleApi
+WORKDIR /src/ExampleApi
 RUN dotnet build ExampleApi.csproj -c Release -o /app
 
 FROM build AS publish
