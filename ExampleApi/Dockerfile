@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.1.0-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 62453
 EXPOSE 44300
 
-FROM microsoft/dotnet:2.1.300-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY ExampleApi/ExampleApi.csproj ExampleApi/
 RUN dotnet restore ExampleApi/ExampleApi.csproj

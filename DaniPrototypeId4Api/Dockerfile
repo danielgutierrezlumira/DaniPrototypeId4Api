@@ -1,8 +1,8 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1.0-aspnetcore-runtime AS base
 WORKDIR /app
 EXPOSE 8080
 
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.1.300-sdk AS build
 WORKDIR /src
 COPY DaniPrototypeId4Api/DaniPrototypeId4Api.csproj DaniPrototypeId4Api/
 RUN dotnet restore DaniPrototypeId4Api/DaniPrototypeId4Api.csproj
