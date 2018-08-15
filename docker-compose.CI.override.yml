@@ -2,9 +2,13 @@ version: '3.4'
 
 services:
   daniprototypeid4api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
     ports:
       - "8080:80"
 
   exampleapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
     ports:
       - "62453:80"
