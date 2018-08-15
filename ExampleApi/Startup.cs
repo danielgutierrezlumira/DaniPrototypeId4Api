@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,11 @@ namespace ExampleApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = Configuration.GetSection(@"AuthorizationSettings");
+            var appSettings = appSettingsSection.Get<AuthorizationSettings>();
+
+            services.Configure<AuthorizationSettings>(appSettingsSection);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthorization();
@@ -25,7 +31,7 @@ namespace ExampleApi
             services.AddAuthentication(@"Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = @"http://localhost:8080";
+                    options.Authority = appSettings.OAuthServer;
                     options.RequireHttpsMetadata = false;
 
                     options.ApiName = @"api1";
