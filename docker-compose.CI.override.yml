@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  daniprototypeid4api:
+    ports:
+      - "8080:80"
+
+  exampleapi:
+    ports:
+      - "62453:80"
