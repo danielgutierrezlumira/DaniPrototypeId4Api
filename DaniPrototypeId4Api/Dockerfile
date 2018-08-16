@@ -4,14 +4,14 @@ EXPOSE 8080
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY DaniPrototypeId4Api/DaniPrototypeId4Api.csproj DaniPrototypeId4Api/
-RUN dotnet restore DaniPrototypeId4Api/DaniPrototypeId4Api.csproj
+COPY ["DaniPrototypeId4Api/DaniPrototypeId4Api.csproj", "DaniPrototypeId4Api/"]
+RUN dotnet restore "DaniPrototypeId4Api/DaniPrototypeId4Api.csproj"
 COPY . .
-WORKDIR /src/DaniPrototypeId4Api
-RUN dotnet build DaniPrototypeId4Api.csproj -c Release -o /app
+WORKDIR "/src/DaniPrototypeId4Api"
+RUN dotnet build "DaniPrototypeId4Api.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish DaniPrototypeId4Api.csproj -c Release -o /app
+RUN dotnet publish "DaniPrototypeId4Api.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
