@@ -38,18 +38,6 @@ namespace DaniPrototypeId4Api
         {
             return new List<TestUser>
             {
-                new TestUser
-                {
-                    SubjectId = @"1",
-                    Username = @"aaron",
-                    Password = @"INRstar_5"
-                },
-                new TestUser
-                {
-                    SubjectId = @"2",
-                    Username = @"hannah",
-                    Password = @"Banana_5"
-                }
             };
         }
     }
